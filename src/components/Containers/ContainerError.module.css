@@ -1,0 +1,8 @@
+.errBox {
+    color: rgb(228, 30, 30);
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 25px;
+    font-weight: 600;
+    padding: 20px 0;
+}
