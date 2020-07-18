@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import s from './SearchForm.module.css';
 
 class SearchForm extends Component {
     state = {
         query: '',
     };
+
+    componentDidMount() {
+        window.addEventListener('keydown', this.hendgeSubmitEnter);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.hendgeSubmitEnter);
+    }
 
     handleChange = e => {
         this.setState({ query: e.currentTarget.value });
@@ -14,6 +23,14 @@ class SearchForm extends Component {
         e.preventDefault();
         this.props.onSubmitForm(this.state.query);
         this.setState({ query: '' });
+    };
+
+    hendgeSubmitEnter = e => {
+        if (e.code === 'Enter') {
+            e.preventDefault();
+            this.props.onSubmitForm(this.state.query);
+            this.setState({ query: '' });
+        }
     };
 
     render() {
@@ -36,5 +53,9 @@ class SearchForm extends Component {
         );
     }
 }
+
+SearchForm.propTypes = {
+    onSubmitForm: PropTypes.func.isRequired,
+};
 
 export default SearchForm;

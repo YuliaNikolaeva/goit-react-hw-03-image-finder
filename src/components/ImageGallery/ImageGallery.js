@@ -1,17 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import s from './ImageGallery.module.css';
-import { v4 as uuidv4 } from 'uuid';
 
 import ImageGalleryItem from '../ImageGalleryItem';
 
-const ImageGallery = ({ imgs }) => {
+const ImageGallery = ({ imgs, onClickOpenModal, getBigImgLink }) => {
     return (
         <ul className={s.ImageGallery}>
             {imgs.map(img => (
-                <ImageGalleryItem image={img} key={uuidv4()} />
+                <ImageGalleryItem
+                    image={img}
+                    key={img.id}
+                    onClickOpenModal={onClickOpenModal}
+                    getBigImgLink={getBigImgLink}
+                />
             ))}
         </ul>
     );
+};
+
+ImageGallery.propTypes = {
+    imgs: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+        }),
+    ),
 };
 
 export default ImageGallery;
