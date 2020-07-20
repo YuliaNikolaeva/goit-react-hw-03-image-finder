@@ -18,7 +18,7 @@ export default class App extends Component {
     state = {
         images: [],
         currentPage: 1,
-        searchQery: '',
+        searchQuery: '',
         isLoading: false,
         showModal: false,
         error: null,
@@ -27,14 +27,14 @@ export default class App extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.searchQery !== this.state.searchQery) {
-            this.fatchImages();
+        if (prevState.searchQuery !== this.state.searchQuery) {
+            this.fetchImages();
         }
     }
 
     onChangeQuery = query => {
         this.setState({
-            searchQery: query,
+            searchQuery: query,
             currentPage: 1,
             images: [],
             error: null,
@@ -43,17 +43,17 @@ export default class App extends Component {
         });
     };
 
-    fatchImages = () => {
-        const { currentPage, searchQery } = this.state;
+    fetchImages = () => {
+        const { currentPage, searchQuery } = this.state;
         const options = {
             currentPage,
-            searchQery,
+            searchQuery,
         };
 
         this.setState({ isLoading: true });
 
         imgApi
-            .fatchImages(options)
+            .fetchImages(options)
             .then(images => {
                 this.setState(prevState => ({
                     images: [...prevState.images, ...images],
@@ -69,7 +69,7 @@ export default class App extends Component {
             .finally(() => this.setState({ isLoading: false }));
     };
 
-    toogleModal = e => {
+    toggleModal = e => {
         this.setState(({ showModal }) => ({
             showModal: !showModal,
         }));
@@ -96,7 +96,7 @@ export default class App extends Component {
             <>
                 {showModal && (
                     <Modal
-                        onClose={this.toogleModal}
+                        onClose={this.toggleModal}
                         images={images}
                         bigImage={bigImgUrl}
                         bigImgAlt={bigImgAlt}
@@ -109,7 +109,7 @@ export default class App extends Component {
 
                 <ImageGallery
                     imgs={images}
-                    onClickOpenModal={this.toogleModal}
+                    onClickOpenModal={this.toggleModal}
                     getBigImgLink={this.getBigImgLink}
                 />
 
@@ -126,7 +126,7 @@ export default class App extends Component {
 
                 {shouldRenderButton && (
                     <ContainerBtn>
-                        <Button text={'Load more'} onClick={this.fatchImages} />
+                        <Button text={'Load more'} onClick={this.fetchImages} />
                     </ContainerBtn>
                 )}
             </>

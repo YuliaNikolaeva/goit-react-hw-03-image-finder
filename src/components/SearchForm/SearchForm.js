@@ -8,11 +8,11 @@ class SearchForm extends Component {
     };
 
     componentDidMount() {
-        window.addEventListener('keydown', this.hendgeSubmitEnter);
+        window.addEventListener('keydown', this.handleSubmitEnter);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('keydown', this.hendgeSubmitEnter);
+        window.removeEventListener('keydown', this.handleSubmitEnter);
     }
 
     handleChange = e => {
@@ -22,14 +22,12 @@ class SearchForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.onSubmitForm(this.state.query);
-        this.setState({ query: '' });
     };
 
-    hendgeSubmitEnter = e => {
+    handleSubmitEnter = e => {
         if (e.code === 'Enter') {
             e.preventDefault();
             this.props.onSubmitForm(this.state.query);
-            this.setState({ query: '' });
         }
     };
 
